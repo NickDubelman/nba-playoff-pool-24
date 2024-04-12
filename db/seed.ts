@@ -2,25 +2,25 @@ import { NBAPlayer, NBATeam, Participant, db } from 'astro:db'
 
 // https://astro.build/db/seed
 export default async function seed() {
-  // Insert some participants
-  await db.insert(Participant).values([
-    { name: 'Nick', favoriteTeam: 'Lakers' },
-    { name: 'David', favoriteTeam: 'Nuggets' },
-    { name: 'Daniel', favoriteTeam: 'Nuggets' },
-  ])
-
   // Create some NBA teams
   await db.insert(NBATeam).values([
     { name: 'Lakers', shortName: 'LAL', color: 'purple' },
     { name: 'Nuggets', shortName: 'DEN', color: 'blue' },
   ])
 
+  // Insert some participants
+  await db.insert(Participant).values([
+    { name: 'Nick', favoriteTeamId: 1 },
+    { name: 'David', favoriteTeamId: 2 },
+    { name: 'Daniel', favoriteTeamId: 2 },
+  ])
+
   // Create some NBA players
   await db.insert(NBAPlayer).values([
-    { name: 'Lebron James', team: 1, participant: 1 },
-    { name: 'Anthony Davis', team: 1 },
-    { name: 'Nikola Jokic', team: 2, participant: 2 },
-    { name: 'Jamal Murray', team: 2, participant: 3 },
-    { name: 'Michael Porter Jr.', team: 2 },
+    { name: 'Lebron James', teamId: 1, participantId: 1 },
+    { name: 'Anthony Davis', teamId: 1 },
+    { name: 'Nikola Jokic', teamId: 2, participantId: 2 },
+    { name: 'Jamal Murray', teamId: 2, participantId: 3 },
+    { name: 'Michael Porter Jr.', teamId: 2 },
   ])
 }

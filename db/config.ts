@@ -4,7 +4,10 @@ const Participant = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
     name: column.text(),
-    favoriteTeam: column.text({ optional: true }),
+    favoriteTeamId: column.number({
+      references: () => NBATeam.columns.id,
+      optional: true,
+    }),
   },
 })
 
@@ -21,8 +24,8 @@ const NBAPlayer = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
     name: column.text(),
-    team: column.number({ references: () => NBATeam.columns.id }),
-    participant: column.number({
+    teamId: column.number({ references: () => NBATeam.columns.id }),
+    participantId: column.number({
       references: () => Participant.columns.id,
       optional: true,
     }),
