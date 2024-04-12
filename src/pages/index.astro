@@ -1,11 +1,36 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import { db, eq, Participant, NBATeam } from 'astro:db'
+import { alias } from 'drizzle-orm/sqlite-core'
 
-const data = await db
+import Layout from '../layouts/Layout.astro'
+import {
+  db,
+  eq,
+  Participant,
+  NBATeam,
+  NBAGame,
+  NBAPlayer,
+  NBAPlayerGameStats,
+} from 'astro:db'
+
+const participants = await db
   .select()
   .from(Participant)
   .innerJoin(NBATeam, eq(NBATeam.id, Participant.favoriteTeamId))
+
+const HomeTeam = alias(NBATeam, 'HomeTeam')
+const AwayTeam = alias(NBATeam, 'AwayTeam')
+
+const games = await db
+  .select()
+  .from(NBAGame)
+  .innerJoin(HomeTeam, eq(HomeTeam.id, NBAGame.homeTeamId))
+  .innerJoin(AwayTeam, eq(AwayTeam.id, NBAGame.awayTeamId))
+
+const stats = await db
+  .select()
+  .from(NBAPlayerGameStats)
+  .innerJoin(NBAPlayer, eq(NBAPlayer.id, NBAPlayerGameStats.playerId))
+  .innerJoin(NBAGame, eq(NBAGame.id, NBAPlayerGameStats.gameId))
 ---
 
 <Layout title="NBA Playoff Scoring Pool">
@@ -13,16 +38,48 @@ const data = await db
     <h1>Welcome to NBA Playoff Scoring Pool!</h1>
 
     <div>
+      <hr />
+      <h2>Participants</h2>
       {
-        data.map((row) => (
+        participants.map((row) => (
           <div>
-            <h2>{row.Participant.name}</h2>
+            <h3>{row.Participant.name}</h3>
             <p>{row.NBATeam.name}</p>
           </div>
         ))
       }
     </div>
-  </main>
 
-  <style></style>
+    <div>
+      <hr />
+      <h2>Games</h2>
+      {
+        games.map((row) => (
+          <div>
+            <h3>
+              {row.AwayTeam.name} @ {row.HomeTeam.name}
+            </h3>
+            <p>{row.NBAGame.date}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div>
+      <hr />
+      <h2>Player Stats</h2>
+      {
+        stats.map((row) => (
+          <div>
+            <h3>{row.NBAPlayer.name}</h3>
+            <p>
+              <b>Points:</b> {row.NBAPlayerGameStats.points}
+            </p>
+          </div>
+        ))
+      }
+
+      <style></style>
+    </div>
+  </main>
 </Layout>

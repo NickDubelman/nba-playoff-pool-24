@@ -13,6 +13,7 @@
     "@astrojs/check": "^0.5.10",
     "@astrojs/db": "^0.10.3",
     "astro": "^4.6.0",
+    "drizzle-orm": "^0.30.8",
     "typescript": "^5.4.5"
   },
   "prettier": {
