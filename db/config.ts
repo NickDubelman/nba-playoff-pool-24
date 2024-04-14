@@ -36,7 +36,7 @@ const NBAGame = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
     date: column.date(),
-    time: column.text(),
+    time: column.text({ optional: true }),
     period: column.number(),
     status: column.text(),
     homeTeamScore: column.number(),
