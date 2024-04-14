@@ -1,85 +1,21 @@
 ---
-import { alias } from 'drizzle-orm/sqlite-core'
-
 import Layout from '../layouts/Layout.astro'
-import {
-  db,
-  eq,
-  Participant,
-  NBATeam,
-  NBAGame,
-  NBAPlayer,
-  NBAPlayerGameStats,
-} from 'astro:db'
 
-const participants = await db
-  .select()
-  .from(Participant)
-  .innerJoin(NBATeam, eq(NBATeam.id, Participant.favoriteTeamId))
+import Leaderboard from '../components/Leaderboard.svelte'
+import getParticipantScores from '../stats/participantScores'
 
-const HomeTeam = alias(NBATeam, 'HomeTeam')
-const AwayTeam = alias(NBATeam, 'AwayTeam')
-
-const games = await db
-  .select()
-  .from(NBAGame)
-  .innerJoin(HomeTeam, eq(HomeTeam.id, NBAGame.homeTeamId))
-  .innerJoin(AwayTeam, eq(AwayTeam.id, NBAGame.awayTeamId))
-
-const stats = await db
-  .select()
-  .from(NBAPlayerGameStats)
-  .innerJoin(NBAPlayer, eq(NBAPlayer.id, NBAPlayerGameStats.playerId))
-  .innerJoin(NBAGame, eq(NBAGame.id, NBAPlayerGameStats.gameId))
+const participantScores = await getParticipantScores()
 ---
 
-<Layout title="NBA Playoff Scoring Pool">
+<Layout title="Scoring Pool">
   <main>
-    <h1>Welcome to NBA Playoff Scoring Pool!</h1>
+    <h1>NBA Playoffs 2024 Scoring Pool</h1>
 
-    <div>
-      <hr />
-      <h2>Participants</h2>
-      {
-        participants.map((row) => (
-          <div>
-            <h3>{row.Participant.name}</h3>
-            <p>{row.NBATeam.name}</p>
-          </div>
-        ))
-      }
-    </div>
+    <p>
+      These stats should update every 10 minutes or so. You need to refresh your
+      page for the stats to update.
+    </p>
 
-    <div>
-      <hr />
-      <h2>Games</h2>
-      {
-        games.map((row) => (
-          <div>
-            <h3>
-              {row.AwayTeam.name} @ {row.HomeTeam.name}
-            </h3>
-            <p>{row.NBAGame.date}</p>
-          </div>
-        ))
-      }
-    </div>
-
-    <div>
-      <hr />
-      <h2>Player Stats</h2>
-      {
-        stats.map((row) => (
-          <div>
-            <h3>{row.NBAPlayer.name}</h3>
-            <p>
-              <b>Points:</b> {row.NBAPlayerGameStats.points}
-            </p>
-          </div>
-        ))
-      }
-
-      <style></style>
-    </div>
+    <Leaderboard participantScores={participantScores} />
   </main>
 </Layout>

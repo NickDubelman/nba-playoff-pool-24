@@ -15,14 +15,30 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ success: false, error }))
     }
 
-    // Insert participant
-    const favoriteTeamId = teams[0].id
-    const result = await db
-      .insert(Participant)
-      .values({ name: participant.name, favoriteTeamId })
-      .onConflictDoUpdate({ target: Participant.name, set: { favoriteTeamId } })
+    // Check if participant already exists
+    const existingParticipant = await db
+      .select()
+      .from(Participant)
+      .where(eq(Participant.name, participant.name))
 
-    const participantId = result.lastInsertRowid
+    let participantId: number | null = null
+    if (existingParticipant.length > 0) {
+      // Already exists, just update
+      participantId = existingParticipant[0].id
+      await db
+        .update(Participant)
+        .set({ favoriteTeamId: teams[0].id })
+        .where(eq(Participant.id, participantId))
+    } else {
+      // Insert participant
+      const favoriteTeamId = teams[0].id
+      const result = await db
+        .insert(Participant)
+        .values({ name: participant.name, favoriteTeamId })
+
+      participantId = Number(result.lastInsertRowid)
+    }
+
     if (!participantId) {
       const error = `Failed to insert participant ${participant.name}`
       return new Response(JSON.stringify({ success: false, error }))
@@ -32,7 +48,7 @@ export const POST: APIRoute = async ({ request }) => {
     for (const player of participant.players) {
       await db
         .update(NBAPlayer)
-        .set({ participantId: Number(participantId) })
+        .set({ participantId })
         .where(eq(NBAPlayer.name, player))
     }
   }
