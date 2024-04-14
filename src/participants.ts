@@ -8,7 +8,7 @@ const participants = [
   {
     name: 'David',
     favoriteTeam: 'DEN',
-    players: ['Nikola Jokic', 'Jamal Murray'],
+    players: ['Nikola Jokic', 'Jamal Murray', 'Dejounte Murray'],
   },
   {
     name: 'Daniel',

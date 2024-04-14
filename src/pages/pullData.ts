@@ -71,7 +71,6 @@ async function insertTeamsAndGames(games: Game[]) {
           id: game.home_team.id,
           name: game.home_team.name,
           shortName: game.home_team.abbreviation,
-          color: 'TODO:',
         })
         .onConflictDoNothing(), // Ignore errors due to team already existing
     )
@@ -83,7 +82,6 @@ async function insertTeamsAndGames(games: Game[]) {
           id: game.visitor_team.id,
           name: game.visitor_team.name,
           shortName: game.visitor_team.abbreviation,
-          color: 'TODO:',
         })
         .onConflictDoNothing(), // Ignore errors due to team already existing
     )

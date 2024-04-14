@@ -16,7 +16,6 @@ const NBATeam = defineTable({
     id: column.number({ primaryKey: true }),
     name: column.text(),
     shortName: column.text(),
-    color: column.text(),
   },
 })
 
