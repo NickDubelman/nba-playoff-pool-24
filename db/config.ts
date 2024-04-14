@@ -3,7 +3,7 @@ import { defineDb, defineTable, column } from 'astro:db'
 const Participant = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
-    name: column.text(),
+    name: column.text({ unique: true }),
     favoriteTeamId: column.number({
       references: () => NBATeam.columns.id,
       optional: true,

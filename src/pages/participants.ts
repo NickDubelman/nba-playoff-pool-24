@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro'
-import { NBAPlayer, NBATeam, Participant, db, eq } from 'astro:db'
+
+import { db, eq, NBAPlayer, NBATeam, Participant } from 'astro:db'
 
 export const POST: APIRoute = async ({ request }) => {
   for (const participant of participants) {
@@ -15,9 +16,11 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Insert participant
+    const favoriteTeamId = teams[0].id
     const result = await db
       .insert(Participant)
-      .values({ name: participant.name, favoriteTeamId: teams[0].id })
+      .values({ name: participant.name, favoriteTeamId })
+      .onConflictDoUpdate({ target: Participant.name, set: { favoriteTeamId } })
 
     const participantId = result.lastInsertRowid
     if (!participantId) {
