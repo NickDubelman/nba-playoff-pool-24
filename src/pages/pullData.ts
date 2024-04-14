@@ -3,19 +3,6 @@ import type { APIRoute } from 'astro'
 import { db, NBATeam, NBAGame, NBAPlayer, NBAPlayerGameStats } from 'astro:db'
 import { formatDate } from '../utils'
 
-const apiBaseURL = 'https://api.balldontlie.io/v1'
-const headers = { Authorization: import.meta.env.BALLDONTLIE_API_KEY }
-
-async function apiRequest(url: string) {
-  return await fetch(url, { headers })
-}
-
-function todayPlusNDays(n: number) {
-  const date = new Date()
-  date.setDate(date.getDate() + n)
-  return date
-}
-
 export const POST: APIRoute = async ({ request }) => {
   // Make sure user provides a secret password
   const password = request.headers.get('Authorization')
@@ -32,6 +19,19 @@ export const POST: APIRoute = async ({ request }) => {
   await insertPlayerStats(games)
 
   return new Response(JSON.stringify({ success: true }))
+}
+
+const apiBaseURL = 'https://api.balldontlie.io/v1'
+const headers = { Authorization: import.meta.env.BALLDONTLIE_API_KEY }
+
+async function apiRequest(url: string) {
+  return await fetch(url, { headers })
+}
+
+function todayPlusNDays(n: number) {
+  const date = new Date()
+  date.setDate(date.getDate() + n)
+  return date
 }
 
 // Do requests to the BallDontLie API to get games between yesterday and tomorrow
