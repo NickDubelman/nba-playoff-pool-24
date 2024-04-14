@@ -1,10 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro'
-
 import Leaderboard from '../components/Leaderboard.svelte'
+import TopScorersOverall from '../components/TopScorersOverall.svelte'
 import getParticipantScores from '../stats/participantScores'
+import getGameStats from '../stats/gameStats'
 
 const participantScores = await getParticipantScores()
+const gameStats = await getGameStats()
 ---
 
 <Layout title="Scoring Pool">
@@ -17,5 +19,7 @@ const participantScores = await getParticipantScores()
     </p>
 
     <Leaderboard participantScores={participantScores} />
+
+    <TopScorersOverall client:load gameStats={gameStats} />
   </main>
 </Layout>
