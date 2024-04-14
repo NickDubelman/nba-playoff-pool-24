@@ -6,3 +6,5 @@ export function formatDate(date: Date) {
 
   return `${year}-${month}-${day}`
 }
+
+export const haventPlayedYet: { name: string; team: string }[] = []

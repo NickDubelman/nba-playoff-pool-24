@@ -19,6 +19,7 @@ export default async function getGameStats() {
     player: stat.NBAPlayer.name,
     team: stat.NBATeam.shortName,
     points: stat.NBAPlayerGameStats.points,
+    minutes: stat.NBAPlayerGameStats.minutes,
     participant: stat.Participant?.name || null,
   }))
 }

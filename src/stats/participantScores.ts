@@ -11,9 +11,7 @@ import {
   NBATeam,
   Participant,
 } from 'astro:db'
-
-// Hardcoded list of eliminated teams
-const eliminatedTeams: string[] = []
+import eliminatedTeams from '../eliminatedTeams'
 
 export default async function getParticipantScores() {
   // Get all participants

@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro'
 
 import { db, eq, NBAPlayer, NBATeam, Participant } from 'astro:db'
+import participants from '../participants'
 
 export const POST: APIRoute = async ({ request }) => {
   for (const participant of participants) {
@@ -55,21 +56,3 @@ export const POST: APIRoute = async ({ request }) => {
 
   return new Response(JSON.stringify({ success: true }))
 }
-
-const participants = [
-  {
-    name: 'Nick',
-    favoriteTeam: 'LAL',
-    players: ['LeBron James', 'Anthony Davis'],
-  },
-  {
-    name: 'David',
-    favoriteTeam: 'DEN',
-    players: ['Nikola Jokic', 'Jamal Murray'],
-  },
-  {
-    name: 'Daniel',
-    favoriteTeam: 'DEN',
-    players: ['Michael Porter Jr.', 'Aaron Gordon'],
-  },
-]
