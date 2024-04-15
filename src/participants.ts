@@ -1,19 +1,55 @@
 // Hardcoded list of participants
 const participants = [
   {
-    name: 'Nick',
-    favoriteTeam: 'LAL',
-    players: ['LeBron James', 'Anthony Davis', 'Bobby Portis'],
-  },
-  {
-    name: 'David',
-    favoriteTeam: 'DEN',
-    players: ['Nikola Jokic', 'Jamal Murray', 'Dejounte Murray'],
+    name: 'Tomlinson',
+    players: ['Jayson Tatum'],
   },
   {
     name: 'Daniel',
     favoriteTeam: 'DEN',
-    players: ['Michael Porter Jr.', 'Aaron Gordon'],
+    players: ['Nikola Jokic'],
+  },
+  {
+    name: 'Senac/Whitaker',
+    players: ['Shai Gilgeous-Alexander'],
+  },
+  {
+    name: 'Moore',
+    players: ['Jalen Brunson'],
+  },
+  {
+    name: 'Malatesta',
+    players: ['Jaylen Brown'],
+  },
+  {
+    name: 'Nick',
+    favoriteTeam: 'LAL',
+    players: ['Luka Doncic', 'Paul George'],
+  },
+  {
+    name: 'Winston',
+    players: ['Giannis Antetokounmpo', 'Jalen Williams'],
+  },
+  {
+    name: 'David',
+    favoriteTeam: 'DEN',
+    players: ['Jamal Murray', 'Derrick White'],
+  },
+  {
+    name: 'Robbie',
+    players: ['Kristaps Porzingis', 'Michael Porter Jr.'],
+  },
+  {
+    name: 'Mikey',
+    players: ['Kyrie Irving', 'Kawhi Leonard'],
+  },
+  {
+    name: 'Victors',
+    players: ['Donovan Mitchell', 'Joel Embiid'],
+  },
+  {
+    name: 'Ethan',
+    players: ['Damian Lillard', 'Anthony Edwards'],
   },
 ]
 
