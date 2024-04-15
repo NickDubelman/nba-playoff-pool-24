@@ -7,6 +7,5 @@ export default async (req: Request) => {
   const headers = { Authorization: process.env.PULL_DATA_PASSWORD || '' }
 
   const resp = await fetch(`${url}/pullData`, { headers })
-  const data = await resp.json()
-  console.log(data)
+  console.log(resp)
 }
