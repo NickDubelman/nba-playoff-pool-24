@@ -4,6 +4,7 @@ import Leaderboard from '../components/Leaderboard.svelte'
 import ScoringBreakdown from '../components/ScoringBreakdown/index.svelte'
 import TopScorersOverall from '../components/TopScorersOverall.svelte'
 import TeamBreakdown from '../components/TeamBreakdown.svelte'
+import LastYearsPodium from '../components/LastYearsPodium.astro'
 import getParticipantScores from '../stats/participantScores'
 import getGameStats from '../stats/gameStats'
 
@@ -24,5 +25,6 @@ const gameStats = await getGameStats()
     <ScoringBreakdown client:only="svelte" gameStats={gameStats} />
     <TopScorersOverall client:load gameStats={gameStats} />
     <TeamBreakdown client:load gameStats={gameStats} />
+    <LastYearsPodium />
   </main>
 </Layout>
