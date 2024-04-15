@@ -13,8 +13,8 @@ export default async function seed() {
   if (false) {
     // Create some NBA teams
     await db.insert(NBATeam).values([
-      { name: 'Lakers', shortName: 'LAL', color: 'purple' },
-      { name: 'Nuggets', shortName: 'DEN', color: 'blue' },
+      { name: 'Lakers', shortName: 'LAL' },
+      { name: 'Nuggets', shortName: 'DEN' },
     ])
 
     // Insert some participants
