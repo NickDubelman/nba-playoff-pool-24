@@ -2,6 +2,7 @@
 const participants = [
   {
     name: 'Tomlinson',
+    favoriteTeam: 'LAL',
     players: ['Jayson Tatum'],
   },
   {
@@ -11,14 +12,17 @@ const participants = [
   },
   {
     name: 'Senac/Whitaker',
+    favoriteTeam: 'LAL',
     players: ['Shai Gilgeous-Alexander'],
   },
   {
     name: 'Moore',
+    favoriteTeam: 'LAL',
     players: ['Jalen Brunson'],
   },
   {
     name: 'Malatesta',
+    favoriteTeam: 'LAL',
     players: ['Jaylen Brown'],
   },
   {
@@ -28,6 +32,7 @@ const participants = [
   },
   {
     name: 'Winston',
+    favoriteTeam: 'LAL',
     players: ['Giannis Antetokounmpo', 'Jalen Williams'],
   },
   {
@@ -37,18 +42,22 @@ const participants = [
   },
   {
     name: 'Robbie',
+    favoriteTeam: 'LAL',
     players: ['Kristaps Porzingis', 'Michael Porter Jr.'],
   },
   {
     name: 'Mikey',
+    favoriteTeam: 'LAL',
     players: ['Kyrie Irving', 'Kawhi Leonard'],
   },
   {
     name: 'Victors',
+    favoriteTeam: 'LAL',
     players: ['Donovan Mitchell', 'Joel Embiid'],
   },
   {
     name: 'Ethan',
+    favoriteTeam: 'LAL',
     players: ['Damian Lillard', 'Anthony Edwards'],
   },
 ]
