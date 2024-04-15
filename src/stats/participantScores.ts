@@ -21,7 +21,7 @@ export default async function getParticipantScores() {
   const participantScores = await db
     .select({
       name: Participant.name,
-      points: sum(NBAPlayerGameStats.points),
+      points: sum(NBAPlayerGameStats.points).mapWith(Number),
       gamesPlayed: count(NBAPlayerGameStats.id),
     })
     .from(Participant)

@@ -21,7 +21,7 @@ const gameStats = await getGameStats()
     </p>
 
     <Leaderboard participantScores={participantScores} />
-    <ScoringBreakdown client:only gameStats={gameStats} />
+    <ScoringBreakdown client:only="svelte" gameStats={gameStats} />
     <TopScorersOverall client:load gameStats={gameStats} />
     <TeamBreakdown client:load gameStats={gameStats} />
   </main>
