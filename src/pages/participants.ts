@@ -5,15 +5,21 @@ import participants from '../participants'
 
 export const POST: APIRoute = async ({ request }) => {
   for (const participant of participants) {
-    // Lookup the favorite team
-    const teams = await db
-      .select()
-      .from(NBATeam)
-      .where(eq(NBATeam.shortName, participant.favoriteTeam))
+    // Lookup the favorite team (if participant has one)
+    let favoriteTeamId: number | null = null
 
-    if (teams.length === 0) {
-      const error = `Team with abbreviation ${participant.favoriteTeam} not found`
-      return new Response(JSON.stringify({ success: false, error }))
+    if (participant.favoriteTeam) {
+      const teams = await db
+        .select()
+        .from(NBATeam)
+        .where(eq(NBATeam.shortName, participant.favoriteTeam))
+
+      if (teams.length === 0) {
+        const error = `Team with abbreviation ${participant.favoriteTeam} not found`
+        return new Response(JSON.stringify({ success: false, error }))
+      }
+
+      favoriteTeamId = teams[0].id
     }
 
     // Check if participant already exists
@@ -28,11 +34,10 @@ export const POST: APIRoute = async ({ request }) => {
       participantId = existingParticipant[0].id
       await db
         .update(Participant)
-        .set({ favoriteTeamId: teams[0].id })
+        .set({ favoriteTeamId })
         .where(eq(Participant.id, participantId))
     } else {
       // Insert participant
-      const favoriteTeamId = teams[0].id
       const result = await db
         .insert(Participant)
         .values({ name: participant.name, favoriteTeamId })

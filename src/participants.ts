@@ -2,7 +2,7 @@ import { db, eq, NBAPlayer, NBATeam, Participant } from 'astro:db'
 
 interface ParticipantWithPlayers {
   name: string
-  favoriteTeam: string // TODO: make this nullable
+  favoriteTeam?: string
   players: string[]
 }
 
@@ -10,7 +10,6 @@ interface ParticipantWithPlayers {
 const participants: ParticipantWithPlayers[] = [
   {
     name: 'Tomlinson',
-    favoriteTeam: 'LAL',
     players: ['Jayson Tatum'],
   },
   {
@@ -20,17 +19,14 @@ const participants: ParticipantWithPlayers[] = [
   },
   {
     name: 'Senac/Whitaker',
-    favoriteTeam: 'LAL',
     players: ['Shai Gilgeous-Alexander'],
   },
   {
     name: 'Moore',
-    favoriteTeam: 'LAL',
     players: ['Jalen Brunson'],
   },
   {
     name: 'Malatesta',
-    favoriteTeam: 'LAL',
     players: ['Jaylen Brown'],
   },
   {
@@ -40,7 +36,6 @@ const participants: ParticipantWithPlayers[] = [
   },
   {
     name: 'Winston',
-    favoriteTeam: 'LAL',
     players: ['Giannis Antetokounmpo', 'Jalen Williams'],
   },
   {
@@ -50,22 +45,18 @@ const participants: ParticipantWithPlayers[] = [
   },
   {
     name: 'Robbie',
-    favoriteTeam: 'LAL',
     players: ['Kristaps Porzingis', 'Michael Porter Jr.'],
   },
   {
     name: 'Mikey',
-    favoriteTeam: 'LAL',
     players: ['Kyrie Irving', 'Kawhi Leonard'],
   },
   {
     name: 'Victors',
-    favoriteTeam: 'LAL',
     players: ['Donovan Mitchell', 'Joel Embiid'],
   },
   {
     name: 'Ethan',
-    favoriteTeam: 'LAL',
     players: ['Damian Lillard', 'Anthony Edwards'],
   },
 ]
@@ -83,7 +74,7 @@ export async function getParticipants(): Promise<ParticipantWithPlayers[]> {
     (acc, row) => {
       const participant: ParticipantWithPlayers = acc[row.Participant.id] || {
         name: row.Participant.name,
-        favoriteTeam: row.NBATeam?.shortName || null,
+        favoriteTeam: row.NBATeam?.shortName || undefined,
         players: [],
       }
 

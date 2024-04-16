@@ -36,9 +36,9 @@ function todayPlusNDays(n: number) {
 
 // Do requests to the BallDontLie API to get games between yesterday and tomorrow
 async function getGames(): Promise<Game[]> {
-  const startOfPlayoffs = new Date('2022-04-16')
+  const startOfPlayoffs = new Date('2024-04-16')
 
-  const yesterday = todayPlusNDays(-10)
+  const yesterday = todayPlusNDays(-1)
   const tomorrow = todayPlusNDays(1)
 
   // We only want to get games from the start of the playoffs
