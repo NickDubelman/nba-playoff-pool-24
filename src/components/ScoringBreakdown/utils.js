@@ -1,9 +1,8 @@
 import * as d3 from 'd3'
 
-import participants from '../../participants'
 import { haventPlayedYet, teamColors } from '../../utils'
 
-export function getScoring(gameStats) {
+export function getScoring(participants, gameStats) {
   const scoring = {}
 
   participants.forEach(({ name, players }) => {
@@ -216,7 +215,7 @@ function stagger(xScale) {
   }
 }
 
-export const margin = { top: 16, right: 0, bottom: 8, left: 86 }
+export const margin = { top: 16, right: 8, bottom: 8, left: 86 }
 const duration = 480
 export const barStep = 32
 const barPadding = 0.09375

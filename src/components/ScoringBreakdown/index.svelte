@@ -4,11 +4,12 @@
 
   import { barStep, down, getScoring, margin, up } from './utils'
 
+  export let participants
   export let gameStats
 
   // 'scoring' is expected to look like:
   //   { [ participantName ]: { name, team, points}[] }
-  const scoring = getScoring(gameStats)
+  const scoring = getScoring(participants, gameStats)
 
   const rootChildren = Object.entries(scoring).map(([name, players]) => ({
     name,
