@@ -83,4 +83,9 @@
 
 <h2>Scoring Breakdown</h2>
 
+<ul>
+  <li>Click a bar to "zoom in"</li>
+  <li>Click the background to "zoom out"</li>
+</ul>
+
 <svg {width} {height} bind:this={viz} />
