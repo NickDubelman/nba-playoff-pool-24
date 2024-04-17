@@ -26,10 +26,7 @@ export default async function getParticipantScores() {
     })
     .from(Participant)
     .innerJoin(NBAPlayer, eq(NBAPlayer.participantId, Participant.id))
-    .innerJoin(
-      NBAPlayerGameStats,
-      eq(NBAPlayerGameStats.playerId, NBAPlayer.id),
-    )
+    .leftJoin(NBAPlayerGameStats, eq(NBAPlayerGameStats.playerId, NBAPlayer.id))
     .groupBy(Participant.id)
 
   let remainingPlayersByParticipant: Record<string, number> = {}
@@ -64,7 +61,9 @@ export default async function getParticipantScores() {
   }
 
   return participantScores.map((score) => ({
-    ...score,
+    name: score.name,
+    points: score.points || 0,
+    gamesPlayed: score.gamesPlayed,
     remainingPlayers: remainingPlayersByParticipant[score.name] || 0,
   }))
 }
