@@ -33,4 +33,6 @@ export const teamColors: Record<string, string> = {
   ATL: '#c9082a',
   NYK: '#ed8025',
   PHO: '#e25301',
+  SAC: '#5a2d81',
+  NOP: '#0c2340',
 }
