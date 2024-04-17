@@ -1,10 +1,10 @@
 <script>
   import * as d3 from 'd3'
 
-  import participants from '../participants'
   import eliminatedTeams from '../eliminatedTeams'
   import { haventPlayedYet } from '../utils'
 
+  export let participants
   export let gameStats
 
   const allTeams = [...new Set(gameStats.map((stat) => stat.team))].sort()

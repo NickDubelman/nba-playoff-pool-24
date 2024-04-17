@@ -33,7 +33,11 @@ const gameStats = await getGameStats()
 
     <TopScorersOverall client:load gameStats={gameStats} />
 
-    <TeamBreakdown client:load gameStats={gameStats} />
+    <TeamBreakdown
+      client:load
+      participants={participants}
+      gameStats={gameStats}
+    />
 
     <LastYearsPodium />
   </main>
