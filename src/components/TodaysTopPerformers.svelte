@@ -43,6 +43,10 @@
     .scaleSequential()
     .domain([Math.min(lastPerformance.points - 2, maxPoints / 2), maxPoints])
     .interpolator(d3.interpolateHsl('white', '#38c434CC'))
+
+  function getGameStatus(time, status) {
+    return status === 'Final' ? 'Final' : `${status} ${time}`
+  }
 </script>
 
 <h2>Today's Top Performers</h2>
@@ -56,16 +60,20 @@
   <tr>
     <th>Player</th>
     <th>Team</th>
+    <th>Picked by</th>
     <th>Points</th>
     <th>Game Status</th>
   </tr>
 
-  {#each topPerformances as { player, points, game, team }}
+  {#each topPerformances as { player, points, game, team, participant }}
     <tr>
       <td>{player}</td>
       <td>{team}</td>
+      <td class:red={!participant}>
+        {participant || 'Not picked'}
+      </td>
       <td style="background: {pointsColor(points)}">{points}</td>
-      <td>{game.status} {game.time}</td>
+      <td>{getGameStatus(game.time, game.status)}</td>
     </tr>
   {/each}
 </table>
@@ -88,6 +96,10 @@
 
   tr td {
     padding: 8px 4px 8px 4px;
+  }
+
+  .red {
+    color: red;
   }
 
   .num-players-selector {
