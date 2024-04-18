@@ -17,7 +17,9 @@
   }
 
   const { date } = startedGames[0]
-  const statsForGames = gameStats.filter((stats) => stats.game.date === date)
+  const statsForGames = gameStats.filter(
+    (stats) => stats.game.date.getTime() === date.getTime(),
+  )
 
   $: topPerformances = statsForGames
     .sort((a, b) => {
