@@ -33,7 +33,7 @@
     .slice(0, numPlayers)
 </script>
 
-<h2>Top Scorers Overall</h2>
+<h2 class="text-2xl font-bold py-3">Top Scorers Overall</h2>
 
 <div class="num-players-selector">
   <input type="range" min="3" max="81" bind:value={numPlayers} />

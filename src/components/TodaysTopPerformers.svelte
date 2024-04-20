@@ -49,7 +49,7 @@
   }
 </script>
 
-<h2>Today's Top Performers</h2>
+<h2 class="text-2xl font-bold py-3">Today's Top Performers</h2>
 
 <div class="num-players-selector">
   <input type="range" min="3" max="32" bind:value={numPlayers} />

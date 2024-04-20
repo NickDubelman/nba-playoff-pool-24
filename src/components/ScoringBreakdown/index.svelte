@@ -81,9 +81,9 @@
   })
 </script>
 
-<h2>Scoring Breakdown</h2>
+<h2 class="text-2xl font-bold py-3">Scoring Breakdown</h2>
 
-<ul>
+<ul class="list-disc ps-8">
   <li>Click a bar to "zoom in"</li>
   <li>Click the background to "zoom out"</li>
 </ul>

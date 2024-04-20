@@ -65,12 +65,19 @@
     .interpolator(greenInterpolator)
 </script>
 
-<h2>Team Breakdown</h2>
+<h2 class="text-2xl font-bold py-3">Team Breakdown</h2>
 
 <div style="margin-bottom: 8px">
-  <span style="margin-right: 4px">Select a team</span>
+  <!-- <span style="margin-right: 4px">Select a team</span> -->
 
-  <select bind:value={breakdownTeam}>
+  <label for="select-a-team" class="text-gray-900 mr-1">Select a team</label>
+
+  <select
+    id="select-a-team"
+    name="select-a-team"
+    bind:value={breakdownTeam}
+    class="rounded-md text-gray-900 py-1.5 pl-3 pr-10 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-violet-600"
+  >
     {#each allTeams as team}
       <option value={team}>{team}</option>
     {/each}

@@ -79,7 +79,7 @@
   })
 </script>
 
-<h2>Leaderboard</h2>
+<h2 class="text-2xl font-bold py-3">Leaderboard</h2>
 
 <table>
   <tr>
