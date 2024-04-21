@@ -32,7 +32,7 @@
   }
 
   const height = getHeight(root)
-  const width = document.body.clientWidth
+  const width = document.body.clientWidth - 16
 
   const xScale = d3
     .scaleLinear()

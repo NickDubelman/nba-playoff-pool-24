@@ -91,7 +91,7 @@
     <div style="color: red">{breakdownTeam} has been eliminated</div>
   {/if}
 
-  <table>
+  <table class="w-full">
     <tr>
       <th>Player</th>
       <th>Picked by</th>
@@ -118,9 +118,7 @@
 
 <style>
   table {
-    width: 100%;
     border-collapse: collapse;
-    min-width: 432px;
   }
 
   tr:not(:last-child) {

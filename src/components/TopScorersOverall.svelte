@@ -40,7 +40,7 @@
   <span>showing top {numPlayers}</span>
 </div>
 
-<table>
+<table class="w-full">
   <tr>
     <th>Player</th>
     <th style="width: 42px">Team</th>
@@ -67,7 +67,6 @@
 
 <style>
   table {
-    width: 100%;
     font-size: 0.86em;
     border-collapse: collapse;
   }

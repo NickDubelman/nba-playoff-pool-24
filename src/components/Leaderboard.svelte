@@ -81,12 +81,12 @@
 
 <h2 class="text-2xl font-bold py-3">Leaderboard</h2>
 
-<table>
+<table class="w-full">
   <tr>
-    <th style="width: 132px">Participant</th>
-    <th style="width: 64px">Points</th>
-    <th style="width: 100px">Players Remaining</th>
-    <th style="width: 70px">Games Played</th>
+    <th style="min-width: 132px">Participant</th>
+    <th style="min-width: 64px">Points</th>
+    <th>Players Remaining</th>
+    <th>Games Played</th>
     <th>PPG</th>
   </tr>
 
@@ -109,9 +109,7 @@
 
 <style>
   table {
-    width: 100%;
     border-collapse: collapse;
-    min-width: 432px;
   }
 
   tr:not(:last-child) {
