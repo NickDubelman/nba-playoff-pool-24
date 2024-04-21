@@ -83,8 +83,8 @@
 
 <table class="w-full">
   <tr>
-    <th style="min-width: 132px">Participant</th>
-    <th style="min-width: 64px">Points</th>
+    <th>Participant</th>
+    <th>Points</th>
     <th>Players Remaining</th>
     <th>Games Played</th>
     <th>PPG</th>
