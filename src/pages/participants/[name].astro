@@ -45,7 +45,10 @@ const players = await db
   .where(eq(NBAPlayer.participantId, participant.Participant.id))
 
 const participantScores = await getParticipantScores()
-const currentPosition = participantScores.findIndex((s) => s.name === name) + 1
+const currentPosition =
+  participantScores
+    .sort((a, b) => (a.points > b.points ? -1 : 1))
+    .findIndex((s) => s.name === name) + 1
 
 const positionSuffix: Record<number, string> = {
   1: 'st',
