@@ -16,32 +16,28 @@ const gameStats = await getGameStats()
 ---
 
 <Layout title="Scoring Pool">
-  <main class="m-2">
-    <h1 class="text-4xl font-bold py-3">NBA Playoffs 2024 Scoring Pool</h1>
+  <p>
+    These stats should update every 10 minutes or so. You need to refresh your
+    page for the stats to update.
+  </p>
 
-    <p>
-      These stats should update every 10 minutes or so. You need to refresh your
-      page for the stats to update.
-    </p>
+  <Leaderboard participantScores={participantScores} />
 
-    <Leaderboard participantScores={participantScores} />
+  <TodaysTopPerformers client:load gameStats={gameStats} />
 
-    <TodaysTopPerformers client:load gameStats={gameStats} />
+  <ScoringBreakdown
+    client:only="svelte"
+    participants={participants}
+    gameStats={gameStats}
+  />
 
-    <ScoringBreakdown
-      client:only="svelte"
-      participants={participants}
-      gameStats={gameStats}
-    />
+  <TopScorersOverall client:load gameStats={gameStats} />
 
-    <TopScorersOverall client:load gameStats={gameStats} />
+  <TeamBreakdown
+    client:load
+    participants={participants}
+    gameStats={gameStats}
+  />
 
-    <TeamBreakdown
-      client:load
-      participants={participants}
-      gameStats={gameStats}
-    />
-
-    <LastYearsPodium />
-  </main>
+  <LastYearsPodium />
 </Layout>

@@ -92,7 +92,12 @@
 
   {#each sortedScores as { name, points, gamesPlayed, remainingPlayers }}
     <tr>
-      <td>{name}</td>
+      <td>
+        <a
+          href="/participants/{name}"
+          class="text-blue-600 font-medium hover:underline">{name}</a
+        >
+      </td>
       <td style="background: {pointsColor(points)}">{points}</td>
       <td style="background: {playersRemainingColor(remainingPlayers)}">
         {remainingPlayers}
