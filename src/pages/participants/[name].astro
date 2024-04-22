@@ -4,6 +4,7 @@ import {
   eq,
   sum,
   count,
+  desc,
   Participant,
   NBAPlayer,
   NBAPlayerGameStats,
@@ -42,6 +43,7 @@ const players = await db
   .innerJoin(NBATeam, eq(NBATeam.id, NBAPlayer.teamId))
   .innerJoin(NBAPlayerGameStats, eq(NBAPlayerGameStats.playerId, NBAPlayer.id))
   .groupBy(NBAPlayer.id)
+  .orderBy(desc(sum(NBAPlayerGameStats.points)))
   .where(eq(NBAPlayer.participantId, participant.Participant.id))
 
 const participantScores = await getParticipantScores()
