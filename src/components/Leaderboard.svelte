@@ -77,6 +77,11 @@
 
     return a.name < b.name ? -1 : 1
   })
+
+  function getParticipantLink(name: string) {
+    // replace / with +
+    return `/participants/${name.replace(/\//g, '+')}`
+  }
 </script>
 
 <h2 class="text-2xl font-bold py-3">Leaderboard</h2>
@@ -94,7 +99,7 @@
     <tr>
       <td>
         <a
-          href="/participants/{name}"
+          href={getParticipantLink(name)}
           class="text-blue-600 font-medium hover:underline">{name}</a
         >
       </td>
