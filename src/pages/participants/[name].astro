@@ -100,7 +100,7 @@ const favoriteTeamColor = teamColors[participant.NBATeam?.shortName || '']
           <tr class="divide-x">
             <td class="py-2">{player.name}</td>
             <td class="px-2">{player.team}</td>
-            <td class="px-2">{player.points}</td>
+            <td class="px-2">{player.points || 0}</td>
             <td class="px-2">{player.gamesPlayed}</td>
             <td class="px-2">
               {player.gamesPlayed
