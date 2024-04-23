@@ -6,6 +6,7 @@ import {
   notInArray,
   sum,
   count,
+  ne,
   NBAPlayer,
   NBAPlayerGameStats,
   NBATeam,
@@ -27,6 +28,7 @@ export default async function getParticipantScores() {
     .from(Participant)
     .innerJoin(NBAPlayer, eq(NBAPlayer.participantId, Participant.id))
     .leftJoin(NBAPlayerGameStats, eq(NBAPlayerGameStats.playerId, NBAPlayer.id))
+    .where(ne(NBAPlayerGameStats.minutes, 0))
     .groupBy(Participant.id)
 
   let remainingPlayersByParticipant: Record<string, number> = {}

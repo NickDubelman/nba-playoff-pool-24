@@ -5,6 +5,8 @@ import {
   sum,
   count,
   desc,
+  and,
+  ne,
   Participant,
   NBAPlayer,
   NBAPlayerGameStats,
@@ -36,18 +38,53 @@ if (participants.length === 0) {
 const participant = participants[0]
 
 const players = await db
+  .select()
+  .from(NBAPlayer)
+  .innerJoin(NBATeam, eq(NBATeam.id, NBAPlayer.teamId))
+  .groupBy(NBAPlayer.id)
+  .where(eq(NBAPlayer.participantId, participant.Participant.id))
+
+const playerStats = await db
   .select({
     name: NBAPlayer.name,
-    team: NBATeam.shortName,
     points: sum(NBAPlayerGameStats.points).mapWith(Number),
     gamesPlayed: count(NBAPlayerGameStats.id),
   })
   .from(NBAPlayer)
-  .innerJoin(NBATeam, eq(NBATeam.id, NBAPlayer.teamId))
   .leftJoin(NBAPlayerGameStats, eq(NBAPlayerGameStats.playerId, NBAPlayer.id))
   .groupBy(NBAPlayer.id)
   .orderBy(desc(sum(NBAPlayerGameStats.points)))
-  .where(eq(NBAPlayer.participantId, participant.Participant.id))
+  .where(
+    and(
+      eq(NBAPlayer.participantId, participant.Participant.id),
+      ne(NBAPlayerGameStats.minutes, 0),
+    ),
+  )
+
+// Create a mapping from player name -> stats
+const playerStatsMap = playerStats.reduce<
+  Record<string, (typeof playerStats)[number]>
+>((acc, player) => {
+  acc[player.name] = player
+  return acc
+}, {})
+
+function getPlayerStats(playerName: string) {
+  return playerStatsMap[playerName]
+}
+
+function getPlayerPoints(playerName: string) {
+  return getPlayerStats(playerName)?.points || 0
+}
+
+function getPlayerGamesPlayed(playerName: string) {
+  return getPlayerStats(playerName)?.gamesPlayed || 0
+}
+
+function getPlayerPPG(playerName: string) {
+  const stats = getPlayerStats(playerName)
+  return stats ? Math.round((stats.points / stats.gamesPlayed) * 100) / 100 : 0
+}
 
 const participantScores = await getParticipantScores()
 const currentPosition =
@@ -99,19 +136,25 @@ const favoriteTeamColor = teamColors[participant.NBATeam?.shortName || '']
 
     <tbody class="divide-y divide-gray-200">
       {
-        players.map((player) => (
-          <tr class="divide-x">
-            <td class="py-2">{player.name}</td>
-            <td class="px-2">{player.team}</td>
-            <td class="px-2">{player.points || 0}</td>
-            <td class="px-2">{player.gamesPlayed}</td>
-            <td class="px-2">
-              {player.gamesPlayed
-                ? Math.round((player.points / player.gamesPlayed) * 100) / 100
-                : 0}
-            </td>
-          </tr>
-        ))
+        players
+          .sort((a, b) => {
+            // Sort by points
+            return (
+              getPlayerPoints(b.NBAPlayer.name) -
+              getPlayerPoints(a.NBAPlayer.name)
+            )
+          })
+          .map((player) => (
+            <tr class="divide-x">
+              <td class="py-2">{player.NBAPlayer.name}</td>
+              <td class="px-2">{player.NBATeam.shortName}</td>
+              <td class="px-2">{getPlayerPoints(player.NBAPlayer.name)}</td>
+              <td class="px-2">
+                {getPlayerGamesPlayed(player.NBAPlayer.name)}
+              </td>
+              <td class="px-2">{getPlayerPPG(player.NBAPlayer.name)}</td>
+            </tr>
+          ))
       }
     </tbody>
   </table>
