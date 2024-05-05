@@ -1,5 +1,6 @@
 <script>
   import * as d3 from 'd3'
+  import eliminatedTeams from '../eliminatedTeams'
 
   export let participants
   export let gameStats
@@ -14,10 +15,13 @@
   const playerStats = {}
 
   // Create a map we can use to look up points for a player
-  gameStats.forEach(({ player, points }) => {
+  gameStats.forEach(({ player, points, team }) => {
     // First time we see a player, initialize an entry in the map for them
     if (!playerStats[player]) {
-      playerStats[player] = { points: 0 }
+      playerStats[player] = {
+        points: 0,
+        active: !eliminatedTeams.includes(team),
+      }
     }
 
     playerStats[player].points += points
@@ -37,6 +41,7 @@
         picks.push({
           player,
           points: stats?.points || 0,
+          active: stats?.active || false,
           pickedBy: participant.name,
           drafted: picks.length + 1,
         })
@@ -52,6 +57,7 @@
         picks.push({
           player,
           points: stats?.points || 0,
+          active: stats?.active || false,
           pickedBy: participant.name,
           drafted: picks.length + 1,
         })
@@ -110,9 +116,14 @@
   </tr>
 
   <tbody class="divide-y divide-gray-200">
-    {#each sortedPicksSlice as { player, points, pickedBy, drafted, rank, net }}
+    {#each sortedPicksSlice as { player, points, active, pickedBy, drafted, rank, net }}
       <tr class="divide-x">
-        <td class="py-2">{player}</td>
+        <td class="py-2">
+          {player}
+          {#if !active}
+            <span>❌</span>
+          {/if}
+        </td>
         <td class="px-2">{pickedBy}</td>
         <td class="px-2">{points}</td>
         <td class="px-2">{drafted}</td>
