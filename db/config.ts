@@ -4,6 +4,7 @@ const Participant = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
     name: column.text({ unique: true }),
+    draftOrder: column.number({ optional: true }),
     favoriteTeamId: column.number({
       references: () => NBATeam.columns.id,
       optional: true,

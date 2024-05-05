@@ -4,12 +4,14 @@ interface ParticipantWithPlayers {
   name: string
   favoriteTeam?: string
   players: string[]
+  draftOrder: number
 }
 
 // Hardcoded list of participants (for seeding participants and player selections)
 const participants: ParticipantWithPlayers[] = [
   {
     name: 'Tomlinson',
+    draftOrder: 1,
     players: [
       'Jayson Tatum',
       'Donte DiVincenzo',
@@ -23,6 +25,7 @@ const participants: ParticipantWithPlayers[] = [
   },
   {
     name: 'Daniel',
+    draftOrder: 2,
     favoriteTeam: 'DEN',
     players: [
       'Nikola Jokic',
@@ -37,6 +40,7 @@ const participants: ParticipantWithPlayers[] = [
   },
   {
     name: 'Senac/Whitaker',
+    draftOrder: 3,
     players: [
       'Shai Gilgeous-Alexander',
       'Devin Booker',
@@ -50,6 +54,7 @@ const participants: ParticipantWithPlayers[] = [
   },
   {
     name: 'Moore',
+    draftOrder: 4,
     players: [
       'Jalen Brunson',
       'Aaron Gordon',
@@ -64,6 +69,7 @@ const participants: ParticipantWithPlayers[] = [
 
   {
     name: 'Malatesta',
+    draftOrder: 5,
     players: [
       'Jaylen Brown',
       'Tyrese Maxey',
@@ -78,6 +84,7 @@ const participants: ParticipantWithPlayers[] = [
 
   {
     name: 'Nick',
+    draftOrder: 6,
     favoriteTeam: 'LAL',
     players: [
       'Luka Doncic',
@@ -93,6 +100,7 @@ const participants: ParticipantWithPlayers[] = [
 
   {
     name: 'Winston',
+    draftOrder: 7,
     players: [
       'Giannis Antetokounmpo',
       'Jalen Williams',
@@ -107,6 +115,7 @@ const participants: ParticipantWithPlayers[] = [
 
   {
     name: 'David',
+    draftOrder: 8,
     favoriteTeam: 'DEN',
     players: [
       'Jamal Murray',
@@ -122,6 +131,7 @@ const participants: ParticipantWithPlayers[] = [
 
   {
     name: 'Robbie',
+    draftOrder: 9,
     players: [
       'Kristaps Porzingis',
       'Michael Porter Jr.',
@@ -135,6 +145,7 @@ const participants: ParticipantWithPlayers[] = [
   },
   {
     name: 'Mikey',
+    draftOrder: 10,
     players: [
       'Kyrie Irving',
       'Kawhi Leonard',
@@ -148,6 +159,7 @@ const participants: ParticipantWithPlayers[] = [
   },
   {
     name: 'Victors',
+    draftOrder: 11,
     players: [
       'Donovan Mitchell',
       'Joel Embiid',
@@ -161,6 +173,7 @@ const participants: ParticipantWithPlayers[] = [
   },
   {
     name: 'Ethan',
+    draftOrder: 12,
     players: [
       'Damian Lillard',
       'Anthony Edwards',
@@ -188,6 +201,7 @@ export async function getParticipants(): Promise<ParticipantWithPlayers[]> {
       const participant: ParticipantWithPlayers = acc[row.Participant.id] || {
         name: row.Participant.name,
         favoriteTeam: row.NBATeam?.shortName || undefined,
+        draftOrder: row.Participant.draftOrder || 0,
         players: [],
       }
 
@@ -199,6 +213,16 @@ export async function getParticipants(): Promise<ParticipantWithPlayers[]> {
     },
     {},
   )
+
+  // Sort each participant's players according to the hardcoded list above
+  // This sort order reflects the order in which the players were drafted
+  for (const { name, players } of Object.values(participantMap)) {
+    players.sort(
+      (a, b) =>
+        participants.find((p) => p.name === name)?.players.indexOf(a)! -
+        participants.find((p) => p.name === name)?.players.indexOf(b)!,
+    )
+  }
 
   // Turn the rows into a list of participants
   return Object.values(participantMap).sort((a, b) =>

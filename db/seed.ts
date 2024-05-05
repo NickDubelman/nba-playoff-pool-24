@@ -17,9 +17,9 @@ export default async function seed() {
 
   // Insert some participants
   await db.insert(Participant).values([
-    { name: 'Nick', favoriteTeamId: 1 },
-    { name: 'David', favoriteTeamId: 2 },
-    { name: 'Daniel', favoriteTeamId: 2 },
+    { name: 'Nick', favoriteTeamId: 1, draftOrder: 1 },
+    { name: 'David', favoriteTeamId: 2, draftOrder: 2 },
+    { name: 'Daniel', favoriteTeamId: 2, draftOrder: 3 },
   ])
 
   // Create some NBA players

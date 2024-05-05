@@ -5,6 +5,7 @@ import TodaysTopPerformers from '../components/TodaysTopPerformers.svelte'
 import ScoringBreakdown from '../components/ScoringBreakdown/index.svelte'
 import TopScorersOverall from '../components/TopScorersOverall.svelte'
 import TeamBreakdown from '../components/TeamBreakdown.svelte'
+import DraftAnalysis from '../components/DraftAnalysis.svelte'
 import LastYearsPodium from '../components/LastYearsPodium.astro'
 import { getParticipants } from '../participants'
 import getParticipantScores from '../stats/participantScores'
@@ -34,6 +35,12 @@ const gameStats = await getGameStats()
   <TopScorersOverall client:load gameStats={gameStats} />
 
   <TeamBreakdown
+    client:load
+    participants={participants}
+    gameStats={gameStats}
+  />
+
+  <DraftAnalysis
     client:load
     participants={participants}
     gameStats={gameStats}
